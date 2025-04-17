@@ -124,7 +124,7 @@ resource "aws_secretsmanager_secret" "github_token" {
 
 resource "aws_secretsmanager_secret_version" "github_token_version" {
   secret_id     = aws_secretsmanager_secret.github_token.id
-  secret_string = jsonencode({ token = "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" })
+  secret_string = jsonencode({ token = "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" })
 }
 
 resource "aws_ecs_task_definition" "tasks" {

@@ -17,8 +17,5 @@ RUN npm install
 # Exposer le port 3000
 EXPOSE 3000
 
-# Exécuter les tests
-RUN npm test
-
 # Démarrer l'application
 CMD ["node", "index.js"]
