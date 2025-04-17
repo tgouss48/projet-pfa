@@ -33,7 +33,5 @@ EXPOSE 3001
 # Lancer les tests Jest
 RUN npm test
 
-RUN mkdir -p /app/uploads && chmod -R 777 /app/uploads
-
 # RUN mkdir -p uploads && chmod -R 777 uploads
 CMD ["node", "server.js"]
