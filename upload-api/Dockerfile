@@ -31,7 +31,7 @@ RUN python3 -m nltk.downloader -d /usr/share/nltk_data stopwords
 # Port & commande
 EXPOSE 3001
 # Lancer les tests Jest
-RUN npm test
+RUN npx test
 
 # RUN mkdir -p uploads && chmod -R 777 uploads
 CMD ["node", "server.js"]

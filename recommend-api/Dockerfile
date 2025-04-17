@@ -28,7 +28,7 @@ ENV PYTHONIOENCODING=utf-8
 
 EXPOSE 3002
 
-RUN npm test
+RUN npx test
 
 # Lancer l'application Node.js en mode dev
 CMD ["node", "server.js"]
