@@ -11,7 +11,7 @@ jobs:
 
     strategy:
       matrix:
-        service: [auth-api, upload-api, recommend-api, frontend-app, scrap-service]
+        service: [auth-api, upload-api, recommend-api, scrap-service]
 
     steps:
     - name: Checkout code
