@@ -3,6 +3,9 @@ const { spawn } = require("child_process");
 const path = require("path");
 const CV = require("../models/cvModel");
 
+const dotenv = require('dotenv');
+dotenv.config();
+
 exports.uploadAndAnalyze = async (req, res) => {
   try {
     const userId = req.user.id;
@@ -10,7 +13,7 @@ exports.uploadAndAnalyze = async (req, res) => {
     const filePath = path.resolve(req.file.path);
     const fileBuffer = fs.readFileSync(filePath);
 
-    const pythonProcess = spawn("python3", ["python/ocr.py", filePath]);
+    const pythonProcess = spawn(process.env.PYTHON, ["python/ocr.py", filePath]);
 
     let data = "";
     pythonProcess.stdout.on("data", (chunk) => {
@@ -58,14 +61,67 @@ exports.downloadCV = async (req, res) => {
       return res.status(404).json({ error: "CV non trouvé" });
     }
 
-    res.set({
-      "Content-Type": "application/pdf",
-      "Content-Disposition": "attachment; filename=cv.pdf"
-    });
+    const base64 = cv.cvFile.toString('base64');
 
-    res.send(cv.cvFile);
+    const dataUrl = `data:application/pdf;base64,${base64}`;
+
+    res.json({ cvDataUrl: dataUrl });
+
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Erreur lors du téléchargement" });
+  }
+};
+
+exports.existCV = async (req, res) => {
+  try {
+    const userId = req.params.userId;
+    const cv = await CV.findOne({ userId: userId });
+
+    if (cv) {
+      res.status(200).json({ hasCV: true });
+    } else {
+      res.status(200).json({ hasCV: false });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Erreur lors de la vérification du CV" });
+  }
+};
+
+exports.getMyCVText = async (req, res) => {
+  try {
+    const userId = req.user.id; // Récupéré depuis verifyToken
+    const cv = await CV.findOne({ userId });
+
+    if (!cv || !cv.cleanedText) {
+      return res.status(404).json({ error: "Aucun CV trouvé pour cet utilisateur." });
+    }
+
+    res.json({ cleanedText: cv.cleanedText });
+  } catch (error) {
+    console.error("Erreur lors de la récupération du CV :", error);
+    res.status(500).json({ error: "Erreur serveur" });
+  }
+};
+
+exports.getCVInfo = async (req, res) => {
+  try {
+    const userId = req.user.id;
+
+    const cv = await CV.findOne({ userId });
+
+    if (!cv) {
+      return res.status(404).json({ message: "Aucun CV trouvé" });
+    }
+
+    res.status(200).json({
+      userName: cv.userName,
+      lastUpdateDate: cv.updatedAt || cv.createdAt,
+    });
+
+  } catch (error) {
+    console.error('Erreur récupération info CV:', error);
+    res.status(500).json({ error: "Erreur serveur" });
   }
 };

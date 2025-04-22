@@ -4,6 +4,9 @@ const Offre = require("../models/offerModel");
 const Cv = require("../models/cvModel");
 const Historique = require("../models/historiqueModel");
 
+const dotenv = require('dotenv');
+dotenv.config();
+
 exports.getRecommendationCount = async (req, res) => {
   const { text } = req.body;
   const userType = req.user.role;
@@ -41,7 +44,7 @@ exports.getRecommendationCount = async (req, res) => {
     };
 
     const scriptPath = path.join(__dirname, "../python/recomEngine.py");
-    const py = spawn("python3", [scriptPath, userType, text]);
+    const py = spawn(process.env.PYTHON, [scriptPath, userType, text]);
 
     let output = "";
     py.stdout.on("data", data => output += data.toString());

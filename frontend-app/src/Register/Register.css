@@ -1,0 +1,357 @@
+@import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@400;700&display=swap');
+
+.register-page {
+  margin: 0;
+  padding: 0;
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(135deg, #f3e5f5 0%, #ede7f6 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 20px;
+  position: relative;
+}
+
+.register-back {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  color: #000;
+  text-decoration: none;
+  font-size: 24px;
+  z-index: 5;
+}
+
+.register-container {
+  background-color: white;
+  border-radius: 25px;
+  padding: 60px 50px;
+  width: 100%;
+  max-width: 500px;
+  box-shadow: 0 0 25px rgba(0, 0, 0, 0.1);
+}
+
+.register-logo-text {
+  font-family: 'Pacifico', cursive;
+  font-size: 2.5rem;
+  text-align: center;
+  color: #d911ef;
+  margin-bottom: 30px;
+}
+
+.register-form {
+  width: 100%;
+}
+
+.role-switch {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.role-switch button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 30px;
+  background-color: #f1f1f1;
+  cursor: pointer;
+  font-weight: bold;
+  color: #7000a0;
+  transition: 0.3s;
+}
+
+.role-switch button.active {
+  background-color: #d911ef;
+  color: white;
+}
+
+.role-switch button:hover {
+  background-color: #c100d1;
+  color: white;
+}
+
+.register-input-with-icon {
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.register-icon {
+  position: absolute;
+  left: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #000;
+  font-size: 1rem;
+}
+
+.register-input-with-icon input {
+  width: 100%;
+  padding: 14px 50px 14px 50px;
+  border-radius: 30px;
+  border: 1px solid #ccc;
+  background-color: #fdfdfd;
+  font-size: 1rem;
+  outline: none;
+}
+
+.register-input-with-icon.input-error input {
+  border: 2px solid #f28b82;
+  background-color: #ffecec;
+}
+
+.register-error-message {
+  color: red;
+  font-size: 0.85rem;
+  margin-top: 5px;
+  padding-left: 10px;
+}
+
+.register-terms {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-bottom: 20px;
+  margin-left: 15px;
+}
+
+.register-terms input[type="checkbox"] {
+  margin-top: 5px;
+}
+
+.register-terms label {
+  font-size: 0.9rem;
+  color: #333;
+}
+
+.register-terms a {
+  color: #a64ac9;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.register-terms a:hover {
+  text-decoration: underline;
+}
+
+.register-btn {
+  background-color: #d911ef;
+  color: white;
+  border: none;
+  padding: 15px;
+  font-size: 1.1rem;
+  border-radius: 30px;
+  width: 100%;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s;
+  margin-top: 10px;
+}
+
+.register-btn:hover {
+  background-color: #b900cc;
+}
+
+.login-redirect {
+  color: #000;
+  text-align: center;
+  margin-top: 25px;
+  font-size: 0.95rem;
+}
+
+.login-redirect a {
+  color: #a64ac9;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.login-redirect a:hover {
+  text-decoration: underline;
+}
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 20px;
+}
+
+.modal-content {
+  background: #fff;
+  border-radius: 20px;
+  padding: 0;
+  width: 100%;
+  max-width: 600px;
+  max-height: 85vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+  animation: fadeIn 0.3s ease;
+  position: relative;
+}
+
+.modal-body::-webkit-scrollbar {
+  width: 6px;
+}
+.modal-body::-webkit-scrollbar-thumb {
+  background-color: #bbb;
+  border-radius: 10px;
+}
+.modal-body::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.modal-body {
+  padding: 25px 30px;
+  font-size: 1rem;
+  color: #444;
+  line-height: 1.8;
+  overflow-y: auto;
+  text-align: justify;
+}
+
+.modal-body h3 {
+  margin-top: 20px;
+  font-size: 1.2rem;
+  color: #222;
+}
+
+.modal-body ul {
+  margin-top: 10px;
+  padding-left: 20px;
+}
+.modal-body ul li {
+  margin-bottom: 8px;
+  list-style-type: disc;
+}
+
+.modal-title {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-top: 15px;
+  padding: 15px;
+  text-align: center;
+  color: #222;
+}
+
+.modal-close {
+  position: absolute;
+  top: 18px;
+  right: 20px;
+  background: none;
+  border: none;
+  font-size: 1.6rem;
+  color: #555;
+  cursor: pointer;
+}
+
+.modal-close:hover {
+  color: #ef2f11;
+}
+
+.conditions-link {
+  background: none;
+  border: none;
+  color: #a64ac9;
+  text-decoration: underline;
+  cursor: pointer;
+  font-size: 0.95rem;
+  margin-left: 4px;
+}
+
+.conditions-link:hover {
+  text-decoration: none;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 1024px) {
+  .register-container {
+    padding: 50px 40px;
+    max-width: 450px;
+  }
+}
+
+@media (max-width: 768px) {
+  .register-container {
+    padding: 40px 30px;
+    max-width: 380px;
+  }
+  .register-logo-text {
+    font-size: 2.2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .register-container {
+    padding: 30px 20px;
+    max-width: 90%;
+  }
+  .register-logo-text {
+    font-size: 2rem;
+  }
+  .register-btn {
+    font-size: 1rem;
+    padding: 12px;
+  }
+  .register-terms {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .register-back-arrow {
+    font-size: 20px;
+    top: 15px;
+    left: 15px;
+  }
+  .modal-content {
+    padding: 20px;
+    border-radius: 15px;
+  }
+
+  .modal-body {
+    font-size: 0.9rem;
+  }
+
+  .modal-close {
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 375px) {
+  .register-container {
+    padding: 20px 15px;
+    max-width: 95%;
+  }
+  .register-logo-text {
+    font-size: 1.8rem;
+  }
+  .register-btn {
+    font-size: 0.9rem;
+    padding: 11px;
+  }
+}
+
+@media (max-width: 600px) {
+  .modal-title {
+    font-size: 1.5rem;
+  }
+  .modal-body {
+    padding: 20px;
+    font-size: 0.95rem;
+  }
+}

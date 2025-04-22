@@ -74,7 +74,7 @@ describe("Tests historiques", () => {
 
       expect(Historique.updateOne).toHaveBeenCalledWith(
         { _id: "hist123" },
-        { action: "Postulé", score: 0.8 }
+        { action: "Postulé", score: 0.8, createdAt: expect.any(Date)}
       );
 
       expect(res.status).toHaveBeenCalledWith(200);

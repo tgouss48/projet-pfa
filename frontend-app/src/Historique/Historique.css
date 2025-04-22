@@ -1,0 +1,293 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.historique-container {
+  background: linear-gradient(135deg, #f3e5f5 0%, #ede7f6 100%);
+  min-height: 100vh;
+  font-family: 'Poppins', sans-serif;
+  padding: 90px 20px 20px 20px;
+  min-height: 100vh;
+  box-sizing: border-box;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.card-size {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 25px;
+}
+
+.welcome-banner {
+  background-color: #ffffff;
+  padding: 20px 30px;
+  border-radius: 20px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  max-width: 700px;
+}
+
+.welcome-texts h2 {
+  font-size: 1.8rem;
+  margin: 0;
+  color: #8e24aa;
+}
+
+.update-cv {
+  display: flex;
+  align-items: center;
+  margin-top: 5px;
+  font-size: 0.9rem;
+  color: #777;
+}
+
+.upload-cv-button {
+  background: linear-gradient(to right, #9c27b0, #d200ff);
+  color: white;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 25px;
+  font-size: 0.8rem;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.upload-cv-button:hover {
+  background: linear-gradient(to right, #8e24aa, #c2185b);
+}
+
+.header-banner {
+  background-color: #9c27b0;
+  color: white;
+  font-size: 0.9rem;
+  font-weight: bold;
+  text-align: left;
+  padding: 8px 20px;
+  border-radius: 20px;
+  width: fit-content;
+  display: flex;
+  align-items: center;
+  margin: 20px 0;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.historique-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.historique-card {
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 18px;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s;
+}
+
+.historique-card:hover {
+  transform: translateY(-4px);
+}
+
+.row-between {
+  display: flex;
+  flex-direction: column; 
+  align-items: flex-start; 
+}
+
+
+.job-title {
+  font-size: 1.2rem;
+  color: #333;
+  margin-bottom: 5px;
+  flex-grow: 1;
+  word-wrap: break-word; 
+}
+
+.recommend-date {
+  font-size: 0.85rem;
+  color: #888;
+  padding-bottom: 10px ;
+}
+
+.tags-line {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+  align-items: center;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+}
+
+.status-tag {
+  background-color: #f3e5f5;
+  color: #9c27b0;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: bold;
+  text-transform: capitalize;
+}
+
+.status-tag.postulé {
+  background-color: #dcedc8;
+  color: #388e3c;
+}
+
+.status-tag.consulté {
+  background-color: #b3e5fc;
+  color: #0277bd;
+}
+
+.match-tag {
+  background-color: #ede7f6;
+  color: #5e35b1;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: bold;
+}
+
+.no-history {
+  color: #222;
+  font-size: clamp(1rem, 2.5vw, 1.4rem);
+  font-weight: 400;
+  text-align: center;
+}
+
+.histo-loading-screen {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: #f7f1fa;
+}
+
+.histo-loader {
+  border: 6px solid #e0b3ff;
+  border-top: 6px solid rgb(181, 8, 234);
+  border-radius: 50%;
+  width: 1.9rem;
+  height: 1.9rem;
+  animation: spin 0.8s linear infinite;
+}
+
+.btn-spinner {
+  border: 3px solid #ccc;
+  border-top: 3px solid rgb(181, 8, 234);
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  animation: spin 1s linear infinite;
+  margin: 0 auto;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@media (max-width: 768px) {
+  .welcome-texts h2 {
+    font-size: 1.4rem;
+  }
+
+  .update-cv {
+    font-size: 0.9rem;
+  }
+
+  .upload-cv-button {
+    margin-top: 15px;
+    font-size: 0.9rem;
+    padding: 10px;
+    width: 100%;
+    justify-content: center;
+  }
+
+  .header-banner {
+    width: 90%;
+    max-width: 200px;
+    margin: 20px auto;
+    font-size: 0.9rem;
+    padding: 10px 20px;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .historique-list {
+    width: 90%;
+    max-width: 400px;
+    margin: 0 auto;
+  }
+
+  .historique-card {
+    width: 100%;
+    padding: 20px;
+    border-radius: 18px;
+  }
+
+  .job-title {
+    font-size: 1rem;
+  }
+
+  .recommend-date {
+    font-size: 0.8rem;
+  }
+
+  .tags-line {
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 8px;
+  }  
+
+  .status-tag, .match-tag {
+    font-size: 0.8rem;
+    padding: 5px 12px;
+  }
+
+  .welcome-banner {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    width: 90%;
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px 15px;
+  }
+
+  .welcome-texts h2 {
+    font-size: 1.4rem;
+  }
+
+  .update-cv {
+    font-size: 0.8rem;
+  }
+
+  .upload-cv-button {
+    width: 100%;
+    max-width: 250px;
+    font-size: 0.9rem;
+    margin-top: 15px;
+    justify-content: center;
+    padding: 10px 20px;
+  }
+
+  .upload-cv-button svg {
+    width: 18px;
+    height: 18px;
+  }
+}

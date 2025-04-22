@@ -5,9 +5,9 @@ const cvSchema = new mongoose.Schema({
   userName: { type: String, required: true },
   cvFile: Buffer,
   cleanedText: String,
-  createdAt: { type: Date, default: Date.now }
 }, {
-  collection: "Cvs_Collections" 
+  collection: "Cvs_Collections",
+  timestamps: true
 });
 
 module.exports = mongoose.model("CV", cvSchema);

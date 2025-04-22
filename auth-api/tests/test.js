@@ -1,17 +1,20 @@
 const bcrypt = require("bcrypt");
 const crypto = require("crypto");
+const jwt = require("jsonwebtoken");
 const {
   register,
   login,
   forgotPassword,
-  resetPassword
+  resetPassword,
+  checkEmail,
+  verifyResetToken
 } = require("../controllers/authController");
 
 const {
   findUserByEmail,
   createUser,
   updateResetToken,
-  resetPassword: resetPasswordInDb
+  resetPassword: resetPasswordFromModel
 } = require("../models/userModel");
 
 const { generateToken } = require("../utils/jwt");
@@ -28,7 +31,8 @@ describe("Auth API", () => {
     req = { body: {} };
     res = {
       status: jest.fn().mockReturnThis(),
-      json: jest.fn()
+      json: jest.fn(),
+      cookie: jest.fn(),
     };
 
     jest.clearAllMocks();
@@ -56,6 +60,15 @@ describe("Auth API", () => {
 
       expect(createUser).toHaveBeenCalled();
       expect(generateToken).toHaveBeenCalled();
+      expect(res.cookie).toHaveBeenCalledWith(
+        'token',
+        'fake-token',
+        expect.objectContaining({
+          httpOnly: true,
+          secure: expect.any(Boolean),
+          sameSite: 'Strict'
+        })
+      );
       expect(res.json).toHaveBeenCalledWith({
         token: "fake-token",
         user: {
@@ -69,7 +82,7 @@ describe("Auth API", () => {
     it("Retourner erreur si email existe déjà", async () => {
       findUserByEmail.mockResolvedValue({ id: "u123" });
 
-      req.body.email = "nihal@mail.com";
+      req.body.email = "user@mail.com";
 
       await register(req, res);
 
@@ -98,6 +111,15 @@ describe("Auth API", () => {
 
       await login(req, res);
 
+      expect(res.cookie).toHaveBeenCalledWith(
+        'token',
+        'fake-token',
+        expect.objectContaining({
+          httpOnly: true,
+          secure: expect.any(Boolean),
+          sameSite: 'Strict'
+        })
+      );
       expect(res.json).toHaveBeenCalledWith({
         token: "fake-token",
         user: {
@@ -162,45 +184,151 @@ describe("Auth API", () => {
   });
 
   describe("Réinitialisation mot de passe", () => {
+  
     it("Réinitialisation réussie", async () => {
-      const validToken = crypto.randomBytes(32).toString("hex");
+      const validToken = "valid-token";
       const future = new Date(Date.now() + 3600000);
-
+  
       req.body = {
-        email: "user@mail.com",
         token: validToken,
         newPassword: "newpass123"
       };
-
+  
+      jest.spyOn(jwt, "verify").mockReturnValue({ email: "user@mail.com" });
+  
       findUserByEmail.mockResolvedValue({
         reset_token: validToken,
         reset_token_expires: future
       });
-
-      resetPasswordInDb.mockResolvedValue();
-
+  
+      resetPasswordFromModel.mockResolvedValue();
+  
       await resetPassword(req, res);
-
-      expect(resetPasswordInDb).toHaveBeenCalled();
-      expect(res.json).toHaveBeenCalledWith({ msg: "Mot de passe réinitialisé" });
+  
+      expect(resetPasswordFromModel).toHaveBeenCalledWith(expect.any(String), expect.any(String));
+      expect(res.json).toHaveBeenCalledWith({ msg: "Mot de passe réinitialisé avec succès" });
     });
-
-    it("Token invalide ou expiré", async () => {
+  
+    it("Token invalide (ne correspond pas)", async () => {
       req.body = {
-        email: "user@mail.com",
         token: "wrong-token",
         newPassword: "xxx"
       };
-
+  
+      jest.spyOn(jwt, "verify").mockReturnValue({ email: "user@mail.com" });
+  
       findUserByEmail.mockResolvedValue({
         reset_token: "not-matching",
+        reset_token_expires: new Date(Date.now() + 3600000) // Non expiré
+      });
+  
+      await resetPassword(req, res);
+  
+      expect(res.status).toHaveBeenCalledWith(400);
+      expect(res.json).toHaveBeenCalledWith({ msg: "Lien invalide" });
+    });
+  
+    it("Token expiré", async () => {
+      req.body = {
+        token: "valid-token",
+        newPassword: "xxx"
+      };
+  
+      jest.spyOn(jwt, "verify").mockReturnValue({ email: "user@mail.com" });
+  
+      findUserByEmail.mockResolvedValue({
+        reset_token: "valid-token",
+        reset_token_expires: new Date(Date.now() - 1000) // Expiré
+      });
+  
+      await resetPassword(req, res);
+  
+      expect(res.status).toHaveBeenCalledWith(400);
+      expect(res.json).toHaveBeenCalledWith({ msg: "Lien expiré" });
+    });
+    
+  });  
+
+  describe("Check Email", () => {
+    it("Email non fourni", async () => {
+      req.body = {};
+  
+      await checkEmail(req, res);
+  
+      expect(res.status).toHaveBeenCalledWith(400);
+      expect(res.json).toHaveBeenCalledWith({ msg: "Email requis" });
+    });
+  
+    it("Email existe déja", async () => {
+      req.body = { email: "user@mail.com" };
+      findUserByEmail.mockResolvedValue({ id: "u123" });
+  
+      await checkEmail(req, res);
+  
+      expect(res.json).toHaveBeenCalledWith({ exists: true });
+    });
+  
+    it("Email n'existe pas", async () => {
+      req.body = { email: "unknown@mail.com" };
+      findUserByEmail.mockResolvedValue(null);
+  
+      await checkEmail(req, res);
+  
+      expect(res.json).toHaveBeenCalledWith({ exists: false });
+    });
+  });  
+
+  describe("Verify Reset Token", () => {
+    it("Token invalide", async () => {
+      req.body = { token: "invalid-token" };
+  
+      jest.spyOn(jwt, "verify").mockImplementation(() => {
+        throw new Error("Invalid token");
+      });
+  
+      await verifyResetToken(req, res);
+  
+      expect(res.json).toHaveBeenCalledWith({ valid: false });
+    });
+  
+    it("Token invalid : utilisateur non trouvé", async () => {
+      req.body = { token: "valid-token" };
+  
+      jest.spyOn(jwt, "verify").mockReturnValue({ email: "user@mail.com" });
+      findUserByEmail.mockResolvedValue(null);
+  
+      await verifyResetToken(req, res);
+  
+      expect(res.json).toHaveBeenCalledWith({ valid: false });
+    });
+  
+    it("Token invalid expiré", async () => {
+      req.body = { token: "valid-token" };
+  
+      jest.spyOn(jwt, "verify").mockReturnValue({ email: "user@mail.com" });
+      findUserByEmail.mockResolvedValue({
+        reset_token: "different-token",
         reset_token_expires: new Date(Date.now() - 1000)
       });
-
-      await resetPassword(req, res);
-
-      expect(res.status).toHaveBeenCalledWith(400);
-      expect(res.json).toHaveBeenCalledWith({ msg: "Token invalide ou expiré" });
+  
+      await verifyResetToken(req, res);
+  
+      expect(res.json).toHaveBeenCalledWith({ valid: false });
     });
-  });
+  
+    it("Token valid non expire", async () => {
+      req.body = { token: "valid-token" };
+  
+      jest.spyOn(jwt, "verify").mockReturnValue({ email: "user@mail.com" });
+      findUserByEmail.mockResolvedValue({
+        reset_token: "valid-token",
+        reset_token_expires: new Date(Date.now() + 10000)
+      });
+  
+      await verifyResetToken(req, res);
+  
+      expect(res.json).toHaveBeenCalledWith({ valid: true });
+    });
+  });  
+
 });

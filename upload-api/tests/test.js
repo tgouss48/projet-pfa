@@ -4,6 +4,9 @@ const { uploadAndAnalyze, downloadCV } = require("../controllers/cvController");
 const CV = require("../models/cvModel");
 const { spawn } = require("child_process");
 
+const dotenv = require('dotenv');
+dotenv.config();
+
 jest.mock("fs");
 jest.mock("child_process");
 jest.mock("../models/cvModel");
@@ -55,7 +58,7 @@ describe("CV API", () => {
 
       await uploadAndAnalyze(req, res);
 
-      expect(spawn).toHaveBeenCalledWith("python3", ["python/ocr.py", path.resolve("uploads/cv-test.pdf")]);
+      expect(spawn).toHaveBeenCalledWith(process.env.PYTHON, ["python/ocr.py", path.resolve("uploads/cv-test.pdf")]);
       expect(CV.findOneAndUpdate).toHaveBeenCalled();
       expect(res.status).toHaveBeenCalledWith(201);
       expect(res.json).toHaveBeenCalledWith({ message: "CV sauvegardé", cvId: "cv123" });
@@ -97,16 +100,13 @@ describe("CV API", () => {
       CV.findById.mockResolvedValue({
         cvFile: Buffer.from("pdf-file")
       });
-
+    
       await downloadCV(req, res);
-
-      expect(res.set).toHaveBeenCalledWith({
-        "Content-Type": "application/pdf",
-        "Content-Disposition": "attachment; filename=cv.pdf"
+    
+      expect(res.json).toHaveBeenCalledWith({
+        cvDataUrl: expect.stringContaining("data:application/pdf;base64,")
       });
-
-      expect(res.send).toHaveBeenCalledWith(Buffer.from("pdf-file"));
-    });
+    });    
 
     it("Retourner 404 si CV non trouvé", async () => {
       CV.findById.mockResolvedValue(null);

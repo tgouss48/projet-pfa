@@ -1,0 +1,119 @@
+.nav-bar-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 65px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 40px;
+  background: linear-gradient(to right, #9c27b0, #d200ff);
+  color: white;
+  z-index: 1000;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+    
+  .nav-bar-logo {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: white;
+  }
+  
+  .nav-bar-links {
+    display: flex;
+    gap: 30px;
+    align-items: center;
+  }
+  
+  .nav-bar-link, .nav-bar-logout-btn  {
+    background: none;
+    border: none;
+    color: white;
+    font-weight: 600;
+    text-decoration: none;
+    font-size: 1rem;
+    position: relative;
+    transition: color 0.3s;
+  }
+  
+  .nav-bar-link::after, .nav-bar-logout-btn::after {
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, #be64f6 0%, #d911ef 100%);
+    bottom: -4px;
+    left: 0;
+    transition: width 0.3s ease;
+  }
+  
+  .nav-bar-link:hover, .nav-bar-logout-btn:hover {
+    color: #4fc3f7;
+  }
+
+  .nav-bar-link:hover::after {
+    width: 100%;
+  }
+
+  .nav-bar-burger {
+    display: none;
+    cursor: pointer;
+  }
+  
+  .burger-icon, .close-icon {
+    font-size: 1.4rem;
+    color: white;
+  }
+  
+  
+  @media (max-width: 768px) {
+    .nav-bar-container {
+      padding: 0 20px;
+      height: 50px;
+    }
+  
+    .nav-bar-logo {
+      font-size: 1.4rem;
+    }
+  
+    .nav-bar-burger {
+      display: block;
+    }
+  
+    .nav-bar-links {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: absolute;
+      top: 55px;
+      right: 15px;
+      background: linear-gradient(to right, #9c27b0, #d200ff);
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      min-width: 180px;
+      gap: 15px;
+      z-index: 999;
+    }
+
+    .nav-bar-links.active {
+      display: flex; 
+    }
+
+    .nav-bar-link, .nav-bar-logout-btn {
+      color: white;
+      font-weight: 600;
+      text-decoration: none;
+      font-size: 1rem;
+      width: 100%;
+      text-align: center;
+      padding: 8px 0;
+      transition: color 0.3s;
+    }
+  
+    .nav-bar-link:hover, .nav-bar-logout-btn:hover {
+      color: #4fc3f7;
+    }
+  }  

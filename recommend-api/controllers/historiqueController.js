@@ -23,7 +23,7 @@ async function saveUserAction(userId, offerId, newAction, score) {
   } else if (newPriority > currentPriority) {
     await Historique.updateOne(
       { _id: existing._id },
-      { action: newAction, score }
+      { action: newAction, score, createdAt: new Date()}
     );
   }
 }
@@ -39,7 +39,7 @@ exports.saveAction = async (req, res) => {
   try {
     await saveUserAction(userId, offerId, action, score);
 
-    // Vérifier qu'on garde max 10 éléments dans l'historique (Consulté/Postulé uniquement)
+    // Vérifier qu'on garde max 10 éléments dans l'historique
     const allHist = await Historique.find({ userId, action: { $in: ["Consulté", "Postulé"] } });
 
     const sorted = allHist.sort((a, b) => {
@@ -80,7 +80,7 @@ exports.getHistory = async (req, res) => {
 
     const history = finalHist.map(h => {
       const offer = offers.find(o => o._id.toString() === h.offerId.toString());
-      return offer ? { ...offer.toObject(), source: h.action, score: h.score } : null;
+      return offer ? { ...offer.toObject(), source: h.action, score: h.score,  actionDate: h.createdAt } : null;
     }).filter(x => x !== null);
 
     return res.status(200).json({ history });

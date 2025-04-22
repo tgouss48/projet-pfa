@@ -1,0 +1,205 @@
+@import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@400;700&display=swap');
+
+.login-page {
+  margin: 0;
+  padding: 0;
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(135deg, #f3e5f5 0%, #ede7f6 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 20px;
+  position: relative;
+}
+
+.login-back-arrow {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  color: #000;
+  text-decoration: none;
+  z-index: 2;
+}
+
+.login-container {
+  background-color: white;
+  border-radius: 25px;
+  padding: 60px 50px;
+  width: 100%;
+  max-width: 450px;
+  box-shadow: 0 0 25px rgba(0, 0, 0, 0.1);
+}
+
+.login-logo-text {
+  font-family: 'Pacifico', cursive;
+  font-size: 2.5rem;
+  text-align: center;
+  color: #d911ef;
+  margin-bottom: 30px;
+}
+
+.login-form {
+  width: 100%;
+}
+
+.login-input-group {
+  margin-bottom: 25px;
+}
+
+.login-input-with-icon {
+  position: relative;
+}
+
+.login-icon {
+  position: absolute;
+  left: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #000;
+}
+
+.login-input-with-icon input {
+  width: 100%;
+  padding: 14px 50px 14px 50px;
+  border-radius: 30px;
+  border: 1px solid #ccc;
+  background-color: #fdfdfd;
+  font-size: 1rem;
+  outline: none;
+}
+
+.login-input-with-icon.login-input-error input {
+  border: 2px solid #f28b82;
+  background-color: #ffecec;
+}
+
+.login-password-field {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.login-toggle-password {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #888;
+}
+
+.login-password-options {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap; 
+  margin-top: 10px;
+  gap: 10px;
+}
+
+.login-error-message-inline {
+  color: red;
+  font-size: 0.9rem;
+  font-weight: normal;
+  flex-grow: 1; 
+}
+
+.login-forgot-password-link {
+  font-size: 0.85rem;
+  font-weight: bold;
+  color: #a64ac9;
+  white-space: nowrap;
+  text-decoration: none;
+}
+
+.login-forgot-password-link:hover {
+  text-decoration: underline;
+}
+
+.login-btn {
+  background-color: #d911ef;
+  color: white;
+  border: none;
+  padding: 15px;
+  font-size: 1.1rem;
+  border-radius: 30px;
+  width: 100%;
+  margin-top: 30px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.login-btn:hover {
+  background-color: #b900cc;
+}
+
+.login-redirect {
+  color: #000;
+  text-align: center;
+  margin-top: 25px;
+  font-size: 0.95rem;
+}
+
+.login-redirect a {
+  color: #a64ac9;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.login-redirect a:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+  .login-container {
+    padding: 40px 30px;
+    max-width: 400px;
+  }
+
+  .login-logo-text {
+    font-size: 2rem;
+  }
+
+  .login-btn {
+    font-size: 1rem;
+    padding: 13px;
+  }
+}
+
+@media (max-width: 480px) {
+  .login-container {
+    padding: 30px 20px;
+    max-width: 100%;
+  }
+
+  .login-logo-text {
+    font-size: 1.8rem;
+  }
+
+  .login-btn {
+    font-size: 0.95rem;
+    padding: 12px;
+  }
+
+  .login-input-with-icon input {
+    padding: 12px 40px;
+    font-size: 0.95rem;
+  }
+
+  .login-password-options {
+    flex-direction: row;
+    gap: 5px;
+    margin-top: 10px;
+  }
+
+  .login-error-message-inline {
+    flex-grow: 1;
+    width: auto;
+  }
+
+  .login-forgot-password-link {
+    font-size: 0.8rem;
+  }
+}
