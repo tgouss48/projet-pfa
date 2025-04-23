@@ -3,10 +3,12 @@ const nodemailer = require('nodemailer');
 const sendEmail = async (to, subject, html) => {
   try {
     const transporter = nodemailer.createTransport({
-      service: 'gmail',
+      host: 'mail.privateemail.com',
+      port: 465,
+      secure: true,
       auth: {
-        user: process.env.GMAIL_USER,
-        pass: process.env.GMAIL_KEY,
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS,
       },
       tls: {
         rejectUnauthorized: false,
@@ -14,15 +16,15 @@ const sendEmail = async (to, subject, html) => {
     });
 
     const result = await transporter.sendMail({
-      from: `"Job Recommendation APP : " <${process.env.GMAIL_USER}>`,
+      from: `"CareerCompass" <${process.env.EMAIL_USER}>`,
       to,
       subject,
       html,
     });
 
-    console.log('Email envoyé via Gmail :', result);
+    console.log('Email envoyé via PrivateEmail (Namecheap) :', result);
   } catch (error) {
-    console.error('Erreur envoi email Gmail :', error);
+    console.error('Erreur envoi email :', error);
     throw error;
   }
 };

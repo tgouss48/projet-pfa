@@ -61,7 +61,27 @@ exports.forgotPassword = async (req, res) => {
   await updateResetToken(email, token, expires);
 
   const resetLink = `${process.env.CLIENT_URL}/reset-password/${token}`;
-  await sendEmail(email, 'Réinitialisation de mot de passe', `<a href="${resetLink}">Clique ici pour réinitialiser</a>`);
+
+  await sendEmail(
+    email,
+    '🔐 Réinitialisation de votre mot de passe',
+    `
+    <div style="font-family: Arial, sans-serif; padding: 20px; background: #f9f9f9; border-radius: 10px; max-width: 600px; margin: auto;">
+      <h2 style="color: #333;">Réinitialisation de votre mot de passe</h2>
+      <p>Bonjour,</p>
+      <p>Nous avons reçu une demande pour réinitialiser le mot de passe de votre compte sur <strong>Career Compass</strong>.</p>
+      <p>Pour créer un nouveau mot de passe, cliquez sur le bouton ci-dessous :</p>
+      <div style="margin: 20px 0;">
+        <a href="${resetLink}" style="padding: 10px 20px; background-color: #007BFF; color: white; text-decoration: none; border-radius: 5px;">
+          Réinitialiser le mot de passe
+        </a>
+      </div>
+      <p>Ce lien expirera dans 1 heure. Si vous n'avez pas demandé cette réinitialisation, ignorez simplement cet e-mail.</p>
+      <hr style="margin: 30px 0;">
+      <small style="color: #888;">© ${new Date().getFullYear()} Career Compass</small>
+    </div>
+    `
+  ); 
 
   res.json({ msg: 'Email envoyé' });
 };
