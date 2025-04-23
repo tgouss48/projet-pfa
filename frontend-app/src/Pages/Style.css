@@ -13,26 +13,26 @@
   }
   
   .style-content h1 {
-    font-size: 2.8rem; /* 🔥 légèrement réduit */
+    font-size: 2.8rem;
     margin-bottom: 20px;
   }
   
   .style-content p {
-    font-size: 1.1rem; /* 🔥 plus petit pour être plus fin */
+    font-size: 1.1rem;
     margin-bottom: 25px;
-    white-space: nowrap; /* garder sur une ligne */
+    white-space: nowrap;
   }
   
   .style-content a {
     display: inline-block;
-    padding: 10px 25px; /* 🔥 réduit la taille du bouton */
+    padding: 10px 25px; 
     background-color: white;
     color: #f44336;
     border-radius: 25px;
     font-weight: bold;
     text-decoration: none;
     transition: background 0.3s, color 0.3s;
-    font-size: 1rem; /* 🔥 texte du bouton un peu plus petit */
+    font-size: 1rem;
   }
   
   .style-content a:hover {
@@ -41,8 +41,17 @@
   }  
 
   @media (max-width: 600px) {
-    .forbidden-content p {
-      font-size: 1.1rem;
-      white-space: normal; /* 👈 sur mobile, re-permettre le retour à la ligne si trop long */
+    .style-content h1 {
+      font-size: 2rem;
+    }
+  
+    .style-content p {
+      font-size: 1rem;
+      white-space: normal;
+    }
+  
+    .style-content a {
+      padding: 8px 20px;
+      font-size: 0.95rem;
     }
   }  

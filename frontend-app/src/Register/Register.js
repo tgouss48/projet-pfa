@@ -72,8 +72,8 @@ const Register = () => {
       });
 
       setTimeout(() => {
-        window.location.href = '/upload';
-      }, 1500);
+        window.location.href = typeInscription === 'Recruteur' ? '/upload' : '/profil-description';
+      }, 1500);      
 
     } catch (error) {
       setErrors(prev => ({
