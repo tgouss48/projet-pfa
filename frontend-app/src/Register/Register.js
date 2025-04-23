@@ -72,7 +72,7 @@ const Register = () => {
       });
 
       setTimeout(() => {
-        window.location.href = typeInscription === 'Recruteur' ? '/upload' : '/profil-description';
+        window.location.href = typeInscription === 'Candidat' ? '/upload' : '/profil-description';
       }, 1500);      
 
     } catch (error) {
