@@ -44,6 +44,10 @@ const handleChange = (e) => {
       updatedErrors.confirmPassword = value !== updatedForm.password;
     }
 
+    if (name === 'termsAccepted' && checked) {
+      updatedErrors.form = '';
+    }
+
     setErrors(updatedErrors);
   };
 
