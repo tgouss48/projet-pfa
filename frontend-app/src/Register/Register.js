@@ -20,21 +20,31 @@ const Register = () => {
 
   const validateEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
-  const handleChange = (e) => {
+const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
-    const newFormData = { ...formData, [name]: type === 'checkbox' ? checked : value };
-    setFormData(newFormData);
+    const updatedForm = { ...formData, [name]: type === 'checkbox' ? checked : value };
+    setFormData(updatedForm);
 
-    setErrors((prevErrors) => {
-      const updatedErrors = { ...prevErrors };
-      if (name === "termsAccepted" && checked) {
-        updatedErrors.form = '';
-      }
-      if (name === "password" && value.length >= 8 && formData.termsAccepted) {
-        updatedErrors.form = '';
-      }
-      return updatedErrors;
-    });
+    const updatedErrors = { ...errors };
+
+    if (name === 'nomComplet') {
+      updatedErrors.nomComplet = !value.trim();
+    }
+
+    if (name === 'email') {
+      updatedErrors.email = !validateEmail(value);
+    }
+
+    if (name === 'password') {
+      updatedErrors.password = value.length < 8;
+      updatedErrors.confirmPassword = updatedForm.confirmPassword && value !== updatedForm.confirmPassword;
+    }
+
+    if (name === 'confirmPassword') {
+      updatedErrors.confirmPassword = value !== updatedForm.password;
+    }
+
+    setErrors(updatedErrors);
   };
 
   const handleSubmit = async (e) => {

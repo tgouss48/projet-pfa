@@ -10,13 +10,11 @@ const ProfileDescription = () => {
   const [candidats, setCandidats] = useState([]);
   const [selectedCvDataUrl, setSelectedCvDataUrl] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [loadingCvIndex, setLoadingCvIndex] = useState(null); // 👈 ici
+  const [loadingCvIndex, setLoadingCvIndex] = useState(null); // Pour bloquer tous les boutons pendant un fetch
 
   const handleGenerateProfiles = async () => {
     if (!description.trim()) return;
-
     setIsLoading(true);
-
     try {
       const profils = await generateRecommended(description);
       setCandidats(profils);
@@ -30,8 +28,8 @@ const ProfileDescription = () => {
   };
 
   const openCvPopup = async (cvUrl, index) => {
+    setLoadingCvIndex(index);
     try {
-      setLoadingCvIndex(index);
       const cvDataUrl = await fetchCvPreview(cvUrl);
       setSelectedCvDataUrl(cvDataUrl);
     } catch (error) {
@@ -65,7 +63,11 @@ const ProfileDescription = () => {
               value={description}
               onChange={(e) => setDescription(e.target.value)}
             />
-            <button className="recruteur-generate-button" onClick={handleGenerateProfiles} disabled={isLoading}>
+            <button
+              className="recruteur-generate-button"
+              onClick={handleGenerateProfiles}
+              disabled={isLoading}
+            >
               {isLoading ? (
                 <div className="recruteur-spinner"></div>
               ) : (
@@ -85,7 +87,7 @@ const ProfileDescription = () => {
                 <button
                   className="recruteur-show-cv-btn"
                   onClick={() => openCvPopup(candidat.cvUrl, index)}
-                  disabled={loadingCvIndex === index}
+                  disabled={loadingCvIndex !== null} // Tous les boutons désactivés
                 >
                   {loadingCvIndex === index ? (
                     <div className="recruteur-small-spinner"></div>
