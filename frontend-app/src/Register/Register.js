@@ -73,7 +73,7 @@ const handleChange = (e) => {
     if (errorMessage || Object.keys(validationErrors).length > 0) return;
 
     try {
-      await registerUser(formData.nomComplet, formData.email, formData.password, typeInscription);
+      await registerUser(formData.nomComplet, formData.email.toLowerCase(), formData.password, typeInscription);
 
       toast.success('Inscription réussie !', {
         position: "bottom-right",

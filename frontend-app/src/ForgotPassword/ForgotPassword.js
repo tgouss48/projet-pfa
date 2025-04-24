@@ -17,19 +17,21 @@ const ForgotPassword = () => {
       setError('Veuillez entrer votre email.');
       return;
     }
+
+    const emailToSend = email.trim().toLowerCase();
   
     setLoading(true);
     try {
-      const exists = await checkEmail(email);
+      const exists = await checkEmail(emailToSend);
       if (!exists) {
         setError('Email non trouvé.');
       } else {
         setError('');
 
-        await forgotPassword(email);
+        await forgotPassword(emailToSend);
   
         setSubmitted(true);
-        console.log('Lien envoyé pour:', email);
+        console.log('Lien envoyé pour:', emailToSend);
         setTimeout(() => {
           window.location.href = '/login';
         }, 5000);

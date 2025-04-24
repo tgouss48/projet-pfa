@@ -71,7 +71,7 @@ exports.getRecommendationCount = async (req, res) => {
 
           topOffers.push({ ...obj, score });
 
-          if (topOffers.length >= 15) break;
+          if (topOffers.length >= 10) break;
         }
 
         return res.json({ recommendedOffers: topOffers });
@@ -93,7 +93,7 @@ exports.getRecommendationCount = async (req, res) => {
           };
         }).filter(x => x !== null);
 
-        return res.json({ recommendedCvs: topCvs });
+        return res.json({ recommendedCvs: topCvs.slice(0, 10) });
       }
     });
 

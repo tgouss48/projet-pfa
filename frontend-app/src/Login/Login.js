@@ -67,7 +67,7 @@ const Login = () => {
 
     if (Object.keys(validationErrors).length === 0) {
       try {
-        const user = await login(formData.email, formData.password);
+        const user = await login(formData.email.toLowerCase(), formData.password);
         console.log('Login réussi:', user);
 
         if (user.role === 'Candidat') {

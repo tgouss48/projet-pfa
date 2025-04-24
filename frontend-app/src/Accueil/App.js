@@ -164,7 +164,7 @@ function App() {
           <div className="footer-section">
             <h3 className="footer-heading">Contact</h3>
             <div className="contact-info">
-              <p><strong>Email:</strong> contact@careercompass.com</p>
+              <p><strong>Email:</strong> jobapp@careercompass.com</p>
               <p><strong>Téléphone:</strong> +212 623 456 789</p>
               <p><strong>Adresse:</strong> Avenue Mohamed Ben Abdellah Regragui, Rabat</p>
             </div>
