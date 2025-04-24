@@ -1,15 +1,12 @@
 const nodemailer = require('nodemailer');
-require('dotenv').config();
 
 const sendEmail = async (to, subject, html) => {
   try {
     const transporter = nodemailer.createTransport({
-      host: 'smtp.privateemail.com',
-      port: 587,
-      secure: false,
+      service: 'gmail',
       auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS,
+        user: process.env.GMAIL_USER,
+        pass: process.env.GMAIL_KEY,
       },
       tls: {
         rejectUnauthorized: false,
@@ -17,15 +14,15 @@ const sendEmail = async (to, subject, html) => {
     });
 
     const result = await transporter.sendMail({
-      from: `"CareerCompass" <${process.env.EMAIL_USER}>`,
+      from: `"CareerCompass : " <${process.env.GMAIL_USER}>`,
       to,
       subject,
       html,
     });
 
-    console.log('Email envoyé via PrivateEmail (Namecheap) :', result);
+    console.log('Email envoyé via Gmail :', result);
   } catch (error) {
-    console.error('Erreur envoi email :', error);
+    console.error('Erreur envoi email Gmail :', error);
     throw error;
   }
 };
