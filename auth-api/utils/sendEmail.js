@@ -1,10 +1,11 @@
 const nodemailer = require('nodemailer');
+require('dotenv').config();
 
 const sendEmail = async (to, subject, html) => {
   try {
     const transporter = nodemailer.createTransport({
       host: 'mail.privateemail.com',
-      port: 587,
+      port: 465,
       secure: true,
       auth: {
         user: process.env.EMAIL_USER,

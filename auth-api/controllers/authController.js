@@ -64,7 +64,7 @@ exports.forgotPassword = async (req, res) => {
 
   await sendEmail(
     email,
-    '🔐 Réinitialisation de votre mot de passe',
+    'Réinitialisation de votre mot de passe',
     `
     <div style="font-family: Arial, sans-serif; padding: 20px; background: #f9f9f9; border-radius: 10px; max-width: 600px; margin: auto;">
       <h2 style="color: #333;">Réinitialisation de votre mot de passe</h2>
